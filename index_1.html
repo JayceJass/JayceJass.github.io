@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xuely — Belajar Mandarin untuk Orang Indonesia</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🀄</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a1a; line-height: 1.7; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 100; }
+    .logo { font-size: 1.4rem; font-weight: 600; color: #1a1a1a; text-decoration: none; }
+    .logo span { color: #D85A30; }
+    .nav-btn { background: #D85A30; color: #fff; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; }
+    .nav-btn:hover { background: #993C1D; }
+
+    /* HERO */
+    .hero { text-align: center; padding: 4rem 2rem 3rem; max-width: 640px; margin: 0 auto; }
+    .hero-label { font-size: 11px; color: #D85A30; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+    .hero h1 { font-size: 2.2rem; font-weight: 600; line-height: 1.3; color: #1a1a1a; margin-bottom: 1rem; }
+    .hero h1 em { color: #D85A30; font-style: normal; }
+    .hero p { font-size: 15px; color: #666; margin-bottom: 2rem; }
+    .cta-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: #D85A30; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-primary:hover { background: #993C1D; }
+    .btn-secondary { background: #fff; color: #1a1a1a; border: 1px solid #ddd; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-secondary:hover { background: #f9f9f9; }
+
+    /* SECTIONS */
+    .divider { height: 1px; background: #f0f0f0; margin: 0 2rem; }
+    .section { padding: 3rem 2rem; max-width: 760px; margin: 0 auto; }
+    .section-label { font-size: 11px; color: #D85A30; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .section-title { font-size: 1.4rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.5rem; }
+    .section-desc { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+
+    /* LESSONS */
+    .lessons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .lesson-card { border: 1px solid #eee; border-radius: 12px; padding: 1.2rem; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+    .lesson-card:hover { border-color: #D85A30; box-shadow: 0 2px 12px rgba(216,90,48,0.08); }
+    .lesson-card.open { border-color: #D85A30; }
+    .tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; background: #FEF0EB; color: #D85A30; margin-bottom: 10px; font-weight: 500; }
+    .lesson-char { font-size: 2rem; font-weight: 600; color: #D85A30; line-height: 1; }
+    .lesson-pinyin { font-size: 12px; color: #999; margin-top: 4px; }
+    .lesson-meaning { font-size: 14px; color: #1a1a1a; margin-top: 4px; font-weight: 500; }
+    .expanded { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f0f0f0; font-size: 13px; color: #555; line-height: 1.8; }
+    .lesson-card.open .expanded { display: block; }
+    .hint { font-size: 12px; color: #aaa; margin-top: 1rem; text-align: center; }
+
+    /* TUTOR */
+    .tutor-card { border: 1px solid #eee; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; }
+    .avatar { width: 56px; height: 56px; border-radius: 50%; background: #FEF0EB; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 600; color: #D85A30; flex-shrink: 0; }
+    .tutor-name { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+    .tutor-meta { font-size: 13px; color: #666; margin-top: 4px; line-height: 1.7; }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .badge { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: #f5f5f5; color: #555; border: 1px solid #eee; }
+    .price-row { margin-top: 14px; display: flex; align-items: baseline; gap: 8px; }
+    .price { font-size: 20px; font-weight: 600; color: #1a1a1a; }
+    .price-note { font-size: 13px; color: #999; }
+    .free-badge { display: inline-block; background: #EDFBF3; color: #1a7f4b; font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px; margin-top: 10px; }
+    .book-btn { display: block; width: 100%; margin-top: 14px; background: #D85A30; color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 500; cursor: pointer; text-align: center; text-decoration: none; }
+    .book-btn:hover { background: #993C1D; }
+
+    /* TOPICS */
+    .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-top: 1rem; }
+    .topic { background: #f9f9f9; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
+    .topic-icon { font-size: 16px; }
+
+    /* FAQ */
+    .faq-item { border-top: 1px solid #f0f0f0; padding: 1rem 0; cursor: pointer; }
+    .faq-item:last-child { border-bottom: 1px solid #f0f0f0; }
+    .faq-q { font-size: 14px; font-weight: 500; color: #1a1a1a; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-icon { font-size: 18px; color: #aaa; transition: transform 0.2s; flex-shrink: 0; }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+    .faq-a { display: none; font-size: 13px; color: #666; line-height: 1.8; margin-top: 10px; }
+    .faq-item.open .faq-a { display: block; }
+
+    /* CALLOUT */
+    .callout { background: #FEF0EB; border-radius: 12px; padding: 1.25rem 1.5rem; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 1.5rem; }
+    .callout-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .callout-text { font-size: 14px; color: #1a1a1a; line-height: 1.7; }
+    .callout-text strong { color: #D85A30; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid #f0f0f0; padding: 2rem; text-align: center; }
+    .footer-logo { font-size: 1.2rem; font-weight: 600; color: #1a1a1a; }
+    .footer-logo span { color: #D85A30; }
+    .footer-note { font-size: 12px; color: #aaa; margin-top: 6px; }
+    .footer-note a { color: #D85A30; text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.6rem; }
+      .tutor-card { flex-direction: column; }
+      nav { padding: 1rem; }
+      .section { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><span>学</span>uely</a>
+  <a class="nav-btn" href="https://wa.me/6281260966317" target="_blank">Book sesi gratis</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">Belajar Mandarin untuk orang Indonesia</p>
+  <h1>Mandarin made <em>fun</em> for Indonesians</h1>
+  <p>Dari sapaan dasar sampai istilah bisnis — belajar sendiri dulu, lalu tingkatkan skill dengan sesi 1-on-1 bersama tutor yang pernah tinggal di China.</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="#lessons">Mulai belajar gratis</a>
+    <a class="btn-secondary" href="#tutoring">Lihat paket tutoring</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FREE LESSONS -->
+<div class="section" id="lessons">
+  <p class="section-label">Free lessons</p>
+  <p class="section-title">Mulai dari yang paling dasar</p>
+  <p class="section-desc">Klik kartu di bawah untuk lihat cara baca, arti, dan contoh penggunaannya dalam bahasa Indonesia.</p>
+
+  <div class="lessons-grid">
+
+    <div class="lesson-card" onclick="toggleLesson(this)">
+      <span class="tag">Greetings</span>
+      <div class="lesson-char">你好</div>
+      <div class="lesson-pinyin">nǐ hǎo</div>
+      <div class="lesson-meaning">Halo / Hai</div>
+      <div class="expanded">
+        你好！→ Halo!<br>
+        你好吗？→ Apa kabar?<br>
+        我很好。→ Saya baik-baik saja.
+      </div>
+    </div>
+
+    <div class="lesson-card" onclick="toggleLesson(this)">
+      <span class="tag">Shopping</span>
+      <div class="lesson-char">多少钱</div>
+      <div class="lesson-pinyin">duōshao qián</div>
+      <div class="lesson-meaning">Berapa harganya?</div>
+      <div class="expanded">
+        这个多少钱？→ Ini berapa?<br>
+        太贵了！→ Terlalu mahal!<br>
+        便宜一点。→ Murahkan sedikit.
+      </div>
+    </div>
+
+    <div class="lesson-card" onclick="toggleLesson(this)">
+      <span class="tag">Business</span>
+      <div class="lesson-char">合作</div>
+      <div class="lesson-pinyin">hézuò</div>
+      <div class="lesson-meaning">Kerjasama</div>
+      <div class="expanded">
+        我们合作吧。→ Mari kita bekerja sama.<br>
+        合作愉快！→ Selamat bekerja sama!<br>
+        期待合作。→ Menantikan kerjasama kita.
+      </div>
+    </div>
+
+    <div class="lesson-card" onclick="toggleLesson(this)">
+      <span class="tag">Numbers</span>
+      <div class="lesson-char">一二三</div>
+      <div class="lesson-pinyin">yī èr sān</div>
+      <div class="lesson-meaning">Satu dua tiga</div>
+      <div class="expanded">
+        一 yī = 1 &nbsp;|&nbsp; 二 èr = 2 &nbsp;|&nbsp; 三 sān = 3<br>
+        四 sì = 4 &nbsp;|&nbsp; 五 wǔ = 5 &nbsp;|&nbsp; 十 shí = 10<br>
+        百 bǎi = 100 &nbsp;|&nbsp; 千 qiān = 1.000
+      </div>
+    </div>
+
+    <div class="lesson-card" onclick="toggleLesson(this)">
+      <span class="tag">Trade</span>
+      <div class="lesson-char">发货</div>
+      <div class="lesson-pinyin">fā huò</div>
+      <div class="lesson-meaning">Kirim barang</div>
+      <div class="expanded">
+        什么时候发货？→ Kapan barang dikirim?<br>
+        已经发货了。→ Barang sudah dikirim.<br>
+        快递单号是？→ Nomor resi berapa?
+      </div>
+    </div>
+
+    <div class="lesson-card" onclick="toggleLesson(this)">
+      <span class="tag">Daily life</span>
+      <div class="lesson-char">谢谢</div>
+      <div class="lesson-pinyin">xièxie</div>
+      <div class="lesson-meaning">Terima kasih</div>
+      <div class="expanded">
+        谢谢你！→ Terima kasih!<br>
+        不客气。→ Sama-sama.<br>
+        非常感谢。→ Terima kasih banyak.
+      </div>
+    </div>
+
+  </div>
+  <p class="hint">👆 Klik kartu untuk lihat contoh kalimat</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- TUTORING -->
+<div class="section" id="tutoring">
+  <p class="section-label">1-on-1 tutoring</p>
+  <p class="section-title">Belajar lebih cepat dengan tutor berpengalaman</p>
+  <p class="section-desc">Sesi personal dengan Jason — yang pernah tinggal 1 tahun di China dan punya sertifikat HSK 5. Semua sesi dalam Bahasa Indonesia biar kamu gampang ngerti.</p>
+
+  <div class="callout">
+    <span class="callout-icon">🎁</span>
+    <div class="callout-text"><strong>Sesi pertama 30 menit GRATIS</strong> — coba dulu, tidak ada kewajiban untuk lanjut. Chat via WhatsApp untuk booking!</div>
+  </div>
+
+  <div class="tutor-card">
+    <div class="avatar">JL</div>
+    <div style="flex:1;">
+      <div class="tutor-name">Jason Laurent</div>
+      <div class="tutor-meta">
+        🏅 HSK 5 — Advanced Mandarin<br>
+        📍 1 tahun di Nanjing, China<br>
+        🎓 International Economics & Trade, NUIST
+      </div>
+      <div class="badges">
+        <span class="badge">Mandarin bisnis</span>
+        <span class="badge">Pemula friendly</span>
+        <span class="badge">Supplier China</span>
+        <span class="badge">Trade terms</span>
+      </div>
+      <div class="price-row">
+        <span class="price">Rp 150.000</span>
+        <span class="price-note">/ sesi 60 menit</span>
+      </div>
+      <span class="free-badge">✓ Sesi pertama 30 menit gratis</span>
+      <a class="book-btn" href="https://wa.me/6281260966317" target="_blank">📲 Book via WhatsApp</a>
+    </div>
+  </div>
+
+  <div style="margin-top: 1.25rem;">
+    <p style="font-size:13px; font-weight:500; color:#1a1a1a; margin-bottom:8px;">Topik yang bisa dipelajari:</p>
+    <div class="topics-grid">
+      <div class="topic"><span class="topic-icon">🛒</span> Belanja dari China</div>
+      <div class="topic"><span class="topic-icon">💼</span> Percakapan bisnis</div>
+      <div class="topic"><span class="topic-icon">💬</span> Sehari-hari</div>
+      <div class="topic"><span class="topic-icon">📄</span> Baca kontrak China</div>
+      <div class="topic"><span class="topic-icon">✈️</span> Persiapan ke China</div>
+      <div class="topic"><span class="topic-icon">🤝</span> Negosiasi supplier</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div class="section" id="faq">
+  <p class="section-label">FAQ</p>
+  <p class="section-title">Pertanyaan yang sering ditanya</p>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Apakah perlu pengalaman Mandarin sebelumnya? <span class="faq-icon">⌄</span></div>
+    <div class="faq-a">Tidak sama sekali! Xuely cocok untuk pemula total. Mulai dari karakter dan kalimat paling dasar, lalu bangun kemampuan perlahan-lahan. Kalau kamu sudah punya dasar, sesi tutoring bisa disesuaikan ke level kamu.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Sesi tutoring dilakukan di mana? <span class="faq-icon">⌄</span></div>
+    <div class="faq-a">Semua sesi dilakukan online via Zoom atau Google Meet. Kamu bisa belajar dari mana saja di Indonesia — cukup punya koneksi internet yang stabil.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Apakah ada sesi percobaan gratis? <span class="faq-icon">⌄</span></div>
+    <div class="faq-a">Ya! Sesi pertama 30 menit gratis untuk kamu coba dulu. Tidak ada kewajiban untuk lanjut jika belum cocok. Langsung chat WhatsApp untuk booking.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Bisa fokus ke Mandarin untuk bisnis atau perdagangan dengan China? <span class="faq-icon">⌄</span></div>
+    <div class="faq-a">Tentu! Jason punya latar belakang International Economics & Trade dan pengalaman langsung membantu transaksi antara pembeli Indonesia dan supplier China. Ini salah satu spesialisasi utama Xuely.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Bagaimana cara pembayarannya? <span class="faq-icon">⌄</span></div>
+    <div class="faq-a">Pembayaran via transfer bank, GoPay, atau OVO. Detail akan dikirimkan setelah booking dikonfirmasi via WhatsApp.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>学</span>uely</div>
+  <div class="footer-note">
+    Belajar Mandarin, jembatani Indonesia dan China.<br>
+    <a href="mailto:jasonlaurent194@gmail.com">jasonlaurent194@gmail.com</a> &nbsp;·&nbsp;
+    <a href="https://wa.me/6281260966317" target="_blank">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  function toggleLesson(card) {
+    var isOpen = card.classList.contains('open');
+    document.querySelectorAll('.lesson-card').forEach(function(c) { c.classList.remove('open'); });
+    if (!isOpen) card.classList.add('open');
+  }
+  function toggleFaq(item) {
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
